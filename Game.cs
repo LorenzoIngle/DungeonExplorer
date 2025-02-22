@@ -27,13 +27,40 @@ namespace DungeonExplorer
                 itemNum = random.Next(0, itemList.Length);
                 item = itemList[itemNum];
                 currentRoom = new Room(item);
-                Console.WriteLine(currentRoom.GetDescription());
-                Console.Write("Would you like to pick up the item yes/no : ");
-                string answer = Console.ReadLine();
-                if (answer.ToLower() == "yes")
+                while (true)
                 {
-                    player.PickUpItem(item);
-                    Console.WriteLine($"your inventory contains: {player.InventoryContents()}");
+                    Console.WriteLine("-------------------------------------------------------------------------");
+                    Console.WriteLine("View room description");
+                    Console.WriteLine();
+                    Console.WriteLine("View current status");
+                    Console.WriteLine();
+                    Console.WriteLine("Pick up item");
+                    Console.WriteLine();
+                    Console.WriteLine("Go to next room");
+                    Console.WriteLine();
+                    Console.Write("Which action would you like to perform: ");
+                    action = Console.ReadLine();
+                    if (action.ToLower() == "view room description")
+                    {
+                        Console.WriteLine(currentRoom.GetDescription());
+                    }
+                    else if (action.ToLower() == "view current status")
+                    {
+                        player.CurrentStatus();
+                    }
+                    else if (action.ToLower() == "pick up item")
+                    {
+                        player.PickUpItem(item);
+                    }
+                    else if (action.ToLower() == "go to next room")
+                    {
+                        Console.WriteLine("Moving to next room");
+                        break;
+                    }
+                    else 
+                    {
+                        Console.WriteLine($"'{action}' is not a valid action please try again");
+                    }
                 }
             }
         }
