@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Media;
 
 namespace DungeonExplorer
@@ -13,15 +14,19 @@ namespace DungeonExplorer
         private string item;
         private string action;
 
-        public Game()
+        public Game(string[] items)
         {
-            // Initialize the game with one room and one player
-
+            Console.Write("Enter your name: ");
+            player = new Player(Console.ReadLine(), 100);
+            currentRoom = new Room();
+            random = new Random();
+            itemList = items;
         }
+
         public void Start()
         {
             // Change the playing logic into true and populate the while loop
-            bool playing = false;
+            bool playing = true;
             while (playing)
             {
                 itemNum = random.Next(0, itemList.Length);

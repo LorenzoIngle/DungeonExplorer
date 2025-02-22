@@ -2,16 +2,42 @@
 {
     public class Room
     {
-        private string description;
+        private string _description;
+        private string _item;
 
-        public Room(string description)
+        public string Description
+        { 
+            get { return _description; } 
+            set 
+            { 
+                _description = string.IsNullOrEmpty(value) ? "No Descrition" : value; 
+            }
+        }
+
+        public string Item
         {
-            this.description = description;
+            get { return _item; }
+            set
+            {
+                _item = string.IsNullOrEmpty(value) ? "No Item" : value;
+            }
+        }
+
+        public Room(string item)
+        {
+            Item = item;
+            Description = $"This room contains a {Item}";
+        }
+
+        public Room()
+        {
+            Item = "";
+            Description = "";
         }
 
         public string GetDescription()
         {
-            return description;
+            return Description;
         }
     }
 }
