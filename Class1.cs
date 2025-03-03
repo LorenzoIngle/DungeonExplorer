@@ -1,8 +1,18 @@
 ﻿using System;
+using System.Diagnostics
 
-public class Testing
+namespace DungeonExplorer
 {
-	public Testing()
-	{
-	}
+    internal class Testing
+    {
+
+        public Testing()
+        {
+        }
+
+        public bool Test_health()
+        {
+            
+        }
+    }
 }
