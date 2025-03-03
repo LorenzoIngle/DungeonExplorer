@@ -13,7 +13,6 @@ namespace DungeonExplorer
             string[] items = { "Health potion", "Sword", "Bow", "Bone"};
             Game game = new Game(items);
             game.Start();
-            Console.WriteLine("Waiting for your Implementation");
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
