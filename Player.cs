@@ -35,6 +35,8 @@ namespace DungeonExplorer
                 {
                     _health = value;
                 }
+                /*_health = value;
+                Testing.TestHealth(_health);*/
             }
         }
 

@@ -17,7 +17,7 @@ namespace DungeonExplorer
         public Game(string[] items)
         {
             Console.Write("Enter your name: ");
-            player = new Player(Console.ReadLine(), 100);
+            player = new Player(Console.ReadLine(), -100);
             currentRoom = new Room();
             random = new Random();
             itemList = items;
