@@ -13,14 +13,16 @@ namespace DungeonExplorer
         private int itemNum;
         private string item;
         private string action;
+        private int roomNum;
 
         public Game(string[] items)
         {
             Console.Write("Enter your name: ");
-            player = new Player(Console.ReadLine(), -100);
+            player = new Player(Console.ReadLine(), 100);
             currentRoom = new Room();
             random = new Random();
             itemList = items;
+            roomNum = 0;
         }
 
         public void Start()
@@ -66,6 +68,13 @@ namespace DungeonExplorer
                     {
                         Console.WriteLine($"'{action}' is not a valid action please try again");
                     }
+                }
+                roomNum += 1;
+                if (roomNum == 10)
+                {
+                    Console.WriteLine("you beat the game, you survived 10 rooms");
+                    player.CurrentStatus();
+                    break;
                 }
             }
         }
