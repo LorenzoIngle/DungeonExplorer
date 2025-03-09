@@ -4,6 +4,9 @@ using System.Media;
 
 namespace DungeonExplorer
 {
+    ///<summary>
+    ///This class contains an instance of the Player class, Room class and Random class it also controls the game loop 
+    ///</summary>
     internal class Game
     {
         private Player player;
@@ -15,24 +18,41 @@ namespace DungeonExplorer
         private string action;
         private int roomNum;
 
-        public Game(string[] items)
+        ///<summary>
+        ///This is a get and set method for the action attribute
+        ///</summary>
+        public string Action
+        {
+            get { return action;  }
+            set
+            {
+                action = value
+            }
+        }
+
+        ///<summary>
+        ///This is a constructor method
+        ///</summary>
+        public Game(string[] Items)
         {
             Console.Write("Enter your name: ");
             player = new Player(Console.ReadLine(), 100);
             currentRoom = new Room();
             random = new Random();
-            itemList = items;
+            itemList = Items;
             roomNum = 0;
         }
 
+        ///<summary>
+        ///This method runs the game loop allowing the user to decide an action to take and ends the game after 10 rooms
+        ///</summary>
         public void Start()
         {
-            // Change the playing logic into true and populate the while loop
             bool playing = true;
             while (playing)
             {
-                itemNum = random.Next(0, itemList.Length);
-                item = itemList[itemNum];
+                itemNum = random.Next(0, itemList.Length); 
+                item = itemList[itemNum]; //this line and the one above determine which item will be in the next room
                 currentRoom = new Room(item);
                 while (true)
                 {
@@ -46,27 +66,27 @@ namespace DungeonExplorer
                     Console.WriteLine("Go to next room");
                     Console.WriteLine();
                     Console.Write("Which action would you like to perform: ");
-                    action = Console.ReadLine();
-                    if (action.ToLower() == "view room description")
+                    Action = Console.ReadLine();
+                    if (Action.ToLower() == "view room description")
                     {
                         Console.WriteLine(currentRoom.GetDescription());
                     }
-                    else if (action.ToLower() == "view current status")
+                    else if (Action.ToLower() == "view current status")
                     {
                         player.CurrentStatus();
                     }
-                    else if (action.ToLower() == "pick up item")
+                    else if (Action.ToLower() == "pick up item")
                     {
                         player.PickUpItem(item);
                     }
-                    else if (action.ToLower() == "go to next room")
+                    else if (Action.ToLower() == "go to next room")
                     {
                         Console.WriteLine("Moving to next room");
                         break;
                     }
                     else 
                     {
-                        Console.WriteLine($"'{action}' is not a valid action please try again");
+                        Console.WriteLine($"'{Action}' is not a valid action please try again");
                     }
                 }
                 roomNum += 1;
