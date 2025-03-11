@@ -14,7 +14,8 @@ namespace DungeonExplorer
         private Random random;
         private string[] itemList;
         private int itemNum;
-        private string item;
+        private string item1;
+        private string item2;
         private string action;
         private int roomNum;
 
@@ -26,7 +27,7 @@ namespace DungeonExplorer
             get { return action;  }
             set
             {
-                action = value
+                action = value;
             }
         }
 
@@ -52,8 +53,10 @@ namespace DungeonExplorer
             while (playing)
             {
                 itemNum = random.Next(0, itemList.Length); 
-                item = itemList[itemNum]; //this line and the one above determine which item will be in the next room
-                currentRoom = new Room(item);
+                item1 = itemList[itemNum];
+                itemNum = random.Next(0, itemList.Length);
+                item2 = itemList[itemNum];  //this line and the ones above determine which items will be in the next room
+                currentRoom = new Room(item1, item2);
                 while (true)
                 {
                     Console.WriteLine("-------------------------------------------------------------------------");
@@ -77,7 +80,21 @@ namespace DungeonExplorer
                     }
                     else if (Action.ToLower() == "pick up item")
                     {
-                        player.PickUpItem(item);
+                        Console.Write($"which item would you like to pick up ({currentRoom.Item1} or {currentRoom.Item2})? : ");
+                        string itemToPickUp = Console.ReadLine();
+
+                        if (itemToPickUp.Equals(currentRoom.Item1, StringComparison.OrdinalIgnoreCase))
+                        {
+                            player.PickUpItem(item1);
+                        }
+                        else if (itemToPickUp.Equals(currentRoom.Item2, StringComparison.OrdinalIgnoreCase))
+                        {
+                            player.PickUpItem(item2);
+                        }
+                        else
+                        {
+                            Console.WriteLine("that is not a item in the room.");
+                        }
                     }
                     else if (Action.ToLower() == "go to next room")
                     {
