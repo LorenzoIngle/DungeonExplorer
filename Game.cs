@@ -5,7 +5,8 @@ using System.Media;
 namespace DungeonExplorer
 {
     ///<summary>
-    ///This class contains an instance of the Player class, Room class and Random class it also controls the game loop 
+    ///This class contains an instance of the Player class, Room
+    ///class and Random class it also controls the game loop 
     ///</summary>
     internal class Game
     {
@@ -45,7 +46,9 @@ namespace DungeonExplorer
         }
 
         ///<summary>
-        ///This method runs the game loop allowing the user to decide an action to take and ends the game after 10 rooms
+        ///This method runs the game loop allowing the user to 
+        ///decide an action to take and ends the game after 10 
+        ///rooms
         ///</summary>
         public void Start()
         {
@@ -53,13 +56,16 @@ namespace DungeonExplorer
             while (playing)
             {
                 itemNum = random.Next(0, itemList.Length);
-                item1 = itemList[itemNum];
+                item1 = itemList[itemNum];  //generates item1
                 itemNum = random.Next(0, itemList.Length);
-                item2 = itemList[itemNum];  //this line and the ones above determine which items will be in the next room
+                item2 = itemList[itemNum];  //generates item2
                 currentRoom = new Room(item1, item2);
                 while (true)
                 {
-                    Console.WriteLine("-------------------------------------------------------------------------");
+                    Console.WriteLine("-------------------" +
+                        "---------------------------------" +
+                        "---------------------");
+
                     Console.WriteLine("View room description");
                     Console.WriteLine();
                     Console.WriteLine("View current status");
@@ -68,48 +74,67 @@ namespace DungeonExplorer
                     Console.WriteLine();
                     Console.WriteLine("Go to next room");
                     Console.WriteLine();
-                    Console.Write("Which action would you like to perform: ");
+                    Console.Write("Which action would you like" +
+                        " to perform: ");
+
                     Action = Console.ReadLine();
-                    if (Action.ToLower() == "view room description")
+                    if (Action.ToLower() == "view room " +
+                        "description")
                     {
-                        Console.WriteLine(currentRoom.GetDescription());
+                        Console.WriteLine(
+                            currentRoom.GetDescription());
                     }
-                    else if (Action.ToLower() == "view current status")
+                    else if (Action.ToLower() == "view current " +
+                        "status")
                     {
                         player.CurrentStatus();
                     }
                     else if (Action.ToLower() == "pick up item")
                     {
-                        Console.Write($"which item would you like to pick up ({currentRoom.Item1} or {currentRoom.Item2})? : ");
+                        Console.Write($"which item would you " +
+                            $"like to pick up " +
+                            $"({currentRoom.Item1} or " +
+                            $"{currentRoom.Item2})? : ");
+
                         string itemToPickUp = Console.ReadLine();
 
-                        if (itemToPickUp.Equals(currentRoom.Item1, StringComparison.OrdinalIgnoreCase))
+                        if (itemToPickUp.Equals(
+                            currentRoom.Item1, 
+                            StringComparison.OrdinalIgnoreCase))
                         {
                             player.PickUpItem(item1);
                         }
-                        else if (itemToPickUp.Equals(currentRoom.Item2, StringComparison.OrdinalIgnoreCase))
+                        else if (itemToPickUp.Equals(
+                            currentRoom.Item2, 
+                            StringComparison.OrdinalIgnoreCase))
                         {
                             player.PickUpItem(item2);
                         }
                         else
                         {
-                            Console.WriteLine("that is not a item in the room.");
+                            Console.WriteLine("that is not a " +
+                                "item in the room.");
                         }
                     }
-                    else if (Action.ToLower() == "go to next room")
+                    else if (Action.ToLower() == "go to next " +
+                        "room")
                     {
-                        Console.WriteLine("Moving to next room");
+                        Console.WriteLine("Moving to next " +
+                            "room");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine($"'{Action}' is not a valid action please try again");
+                        Console.WriteLine($"'{Action}' is " +
+                            $"not a valid action please try " +
+                            $"again");
                     }
                 }
                 roomNum += 1;
                 if (roomNum == 10)
                 {
-                    Console.WriteLine("you beat the game, you survived 10 rooms");
+                    Console.WriteLine("you beat the game," +
+                        " you survived 10 rooms");
                     player.CurrentStatus();
                     break;
                 }

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace DungeonExplorer
 {
     ///<summary>
-    ///This class keeps track of the players name, health, and inventory
+    ///This class keeps track of the players name, health, and 
+    ///inventory
     ///</summary>
     public class Player
     {
@@ -20,12 +21,14 @@ namespace DungeonExplorer
             get { return _name; }
             set
             {
-                _name = string.IsNullOrEmpty(value) ? "noName" : value;
+                _name = string.IsNullOrEmpty(value) ? 
+                    "noName" : value;
             }
         }
 
         ///<summary>
-        ///This is a get and set method for the _health attribute
+        ///This is a get and set method for the _health 
+        ///attribute
         ///</summary>
         public int Health
         {
@@ -59,7 +62,8 @@ namespace DungeonExplorer
         }
 
         ///<summary>
-        ///This method adds an item to the inventory if it is empty and returns an error message if it is full
+        ///This method adds an item to the inventory if it is 
+        ///empty and returns an error message if it is full
         ///</summary>
         public void PickUpItem(string Item)
         {
@@ -69,7 +73,8 @@ namespace DungeonExplorer
             }
             else
             {
-                Console.WriteLine("Inventory full, could not pick up item");
+                Console.WriteLine("Inventory full, could not " +
+                    "pick up item");
             }
         }
 
@@ -82,11 +87,13 @@ namespace DungeonExplorer
         }
 
         ///<summary>
-        ///This method prints the health and inventory of the player
+        ///This method prints the health and inventory of 
+        ///the player
         ///</summary>
         public void CurrentStatus()
         {
-            Console.WriteLine($"{Health} HP, your inventory contains: {InventoryContents()}");
+            Console.WriteLine($"{Health} HP, your inventory " +
+                $"contains: {InventoryContents()}");
         }
     }
 }
