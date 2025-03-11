@@ -16,9 +16,9 @@ namespace DungeonExplorer
         ///This is a get and set method for the _name attribute
         ///</summary>
         public string Name
-        { 
-            get { return _name; } 
-            set 
+        {
+            get { return _name; }
+            set
             {
                 _name = string.IsNullOrEmpty(value) ? "noName" : value;
             }
@@ -30,7 +30,7 @@ namespace DungeonExplorer
         public int Health
         {
             get { return _health; }
-            set 
+            set
             {
                 if (value < 0)
                 {
@@ -52,7 +52,7 @@ namespace DungeonExplorer
         ///<summary>
         ///This is a constructor method
         ///</summary>
-        public Player(string name, int health) 
+        public Player(string name, int health)
         {
             Name = name;
             Health = health;
