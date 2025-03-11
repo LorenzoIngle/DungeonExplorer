@@ -6,7 +6,8 @@
     public class Room
     {
         private string _description;
-        private string _item;
+        private string _item1;
+        private string _item2;
 
         ///<summary>
         ///This is a get and set method for the _description attribute
@@ -21,24 +22,37 @@
         }
 
         ///<summary>
-        ///This is a get and set method for the _item attribute
+        ///This is a get and set method for the _item1 attribute
         ///</summary>
-        public string Item
+        public string Item1
         {
-            get { return _item; }
+            get { return _item1; }
             set
             {
-                _item = string.IsNullOrEmpty(value) ? "No Item" : value;
+                _item1 = string.IsNullOrEmpty(value) ? "No Item" : value;
             }
         }
 
         ///<summary>
-        ///This is a constructor method for when there is an item
+        ///This is a get and set method for the _item2 attribute
         ///</summary>
-        public Room(string item)
+        public string Item2
         {
-            Item = item;
-            Description = $"This room contains a {Item}";
+            get { return _item2; }
+            set
+            {
+                _item2 = string.IsNullOrEmpty(value) ? "No Item" : value;
+            }
+        }
+
+        ///<summary>
+        ///This is a constructor method for when there is items
+        ///</summary>
+        public Room(string item1, string item2)
+        {
+            Item1 = item1;
+            Item2 = item2;
+            Description = $"This room contains a {Item1} and a {Item2}";
         }
 
         ///<summary>
@@ -46,7 +60,7 @@
         ///</summary>
         public Room()
         {
-            Item = "";
+            Item1 = "";
             Description = "";
         }
 
