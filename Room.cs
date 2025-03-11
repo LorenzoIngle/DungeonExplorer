@@ -13,11 +13,11 @@
         ///This is a get and set method for the _description attribute
         ///</summary>
         public string Description
-        { 
-            get { return _description; } 
-            set 
-            { 
-                _description = string.IsNullOrEmpty(value) ? "No Descrition" : value; 
+        {
+            get { return _description; }
+            set
+            {
+                _description = string.IsNullOrEmpty(value) ? "No Descrition" : value;
             }
         }
 

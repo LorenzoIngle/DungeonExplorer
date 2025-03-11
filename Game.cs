@@ -24,7 +24,7 @@ namespace DungeonExplorer
         ///</summary>
         public string Action
         {
-            get { return action;  }
+            get { return action; }
             set
             {
                 action = value;
@@ -52,7 +52,7 @@ namespace DungeonExplorer
             bool playing = true;
             while (playing)
             {
-                itemNum = random.Next(0, itemList.Length); 
+                itemNum = random.Next(0, itemList.Length);
                 item1 = itemList[itemNum];
                 itemNum = random.Next(0, itemList.Length);
                 item2 = itemList[itemNum];  //this line and the ones above determine which items will be in the next room
@@ -101,7 +101,7 @@ namespace DungeonExplorer
                         Console.WriteLine("Moving to next room");
                         break;
                     }
-                    else 
+                    else
                     {
                         Console.WriteLine($"'{Action}' is not a valid action please try again");
                     }
