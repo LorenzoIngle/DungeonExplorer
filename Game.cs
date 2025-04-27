@@ -11,12 +11,10 @@ namespace DungeonExplorer
     internal class Game
     {
         private Player player;
+        private GameMap map;
         private Room currentRoom;
         private Random random;
         private string[] itemList;
-        private int itemNum;
-        private string item1;
-        private string item2;
         private string action;
         private int roomNum;
 
@@ -39,7 +37,7 @@ namespace DungeonExplorer
         {
             Console.Write("Enter your name: ");
             player = new Player(Console.ReadLine(), 100);
-            currentRoom = new Room();
+            map = new GameMap();
             random = new Random();
             itemList = Items;
             roomNum = 0;
@@ -55,66 +53,135 @@ namespace DungeonExplorer
             bool playing = true;
             while (playing)
             {
-                itemNum = random.Next(0, itemList.Length);
-                item1 = itemList[itemNum];  //generates item1
-                itemNum = random.Next(0, itemList.Length);
-                item2 = itemList[itemNum];  //generates item2
-                currentRoom = new Room(item1, item2);
+                currentRoom = map.rooms[roomNum];
+                Console.WriteLine("-------------------" +
+                        "---------------------------------" +
+                        "---------------------");
+                currentRoom.GetDescription();
                 while (true)
                 {
                     Console.WriteLine("-------------------" +
                         "---------------------------------" +
                         "---------------------");
-
-                    Console.WriteLine("View room description");
                     Console.WriteLine();
-                    Console.WriteLine("View current status");
-                    Console.WriteLine();
-                    Console.WriteLine("Pick up item");
-                    Console.WriteLine();
-                    Console.WriteLine("Go to next room");
-                    Console.WriteLine();
+                    if (currentRoom.Monster == null)
+                    {
+                        Console.WriteLine("View current status");
+                        Console.WriteLine();
+                        Console.WriteLine("Pick up item");
+                        Console.WriteLine();
+                        Console.WriteLine("Heal");
+                        Console.WriteLine();
+                        Console.WriteLine("Go to next room");
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("View current status");
+                        Console.WriteLine();
+                        Console.WriteLine("Pick up item");
+                        Console.WriteLine();
+                        Console.WriteLine("Attack monster");
+                        Console.WriteLine();
+                        Console.WriteLine("Heal");
+                        Console.WriteLine();
+                    }
                     Console.Write("Which action would you like" +
                         " to perform: ");
 
                     Action = Console.ReadLine();
-                    if (Action.ToLower() == "view room " +
-                        "description")
-                    {
-                        Console.WriteLine(
-                            currentRoom.GetDescription());
-                    }
-                    else if (Action.ToLower() == "view current " +
+                    if (Action.ToLower() == "view current " +
                         "status")
                     {
                         player.CurrentStatus();
                     }
                     else if (Action.ToLower() == "pick up item")
                     {
-                        Console.Write($"which item would you " +
-                            $"like to pick up " +
-                            $"({currentRoom.Item1} or " +
-                            $"{currentRoom.Item2})? : ");
-
-                        string itemToPickUp = Console.ReadLine();
-
-                        if (itemToPickUp.Equals(
-                            currentRoom.Item1, 
-                            StringComparison.OrdinalIgnoreCase))
+                        if (currentRoom.Item1 == null && currentRoom.Item2 == null)
                         {
-                            player.PickUpItem(item1);
+                            Console.WriteLine("no items to pick up");
                         }
-                        else if (itemToPickUp.Equals(
-                            currentRoom.Item2, 
-                            StringComparison.OrdinalIgnoreCase))
+                        else if (currentRoom.Item1 == null)
                         {
-                            player.PickUpItem(item2);
+                            Console.WriteLine("picking up " +
+                                $"{currentRoom.Item2.Name}");
+                            player.PickUpItem(currentRoom.Item2);
+                            currentRoom.Item2 = null;
+                        }
+                        else if (currentRoom.Item2 == null)
+                        {
+                            Console.WriteLine("picking up " +
+                                $"{currentRoom.Item1.Name}");
+                            player.PickUpItem(currentRoom.Item1);
+                            currentRoom.Item1 = null;
                         }
                         else
                         {
-                            Console.WriteLine("that is not a " +
-                                "item in the room.");
+
+                            Console.Write($"which item would you " +
+                                $"like to pick up " +
+                                $"({currentRoom.Item1.Name} or " +
+                                $"{currentRoom.Item2.Name})? : ");
+
+                            string itemToPickUp = Console.ReadLine();
+
+                            if (itemToPickUp.Equals(
+                                currentRoom.Item1.Name,
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                player.PickUpItem(currentRoom.Item1);
+                                currentRoom.Item1 = null;
+                            }
+                            else if (itemToPickUp.Equals(
+                                currentRoom.Item2.Name,
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                player.PickUpItem(currentRoom.Item2);
+                                currentRoom.Item2 = null;
+                            }
+                            else
+                            {
+                                Console.WriteLine("that is not a " +
+                                    "item in the room.");
+                            }
                         }
+                    }
+                    else if (Action.ToLower() == "attack monster")
+                    {
+                        if (currentRoom.Monster == null)
+                        {
+                            Console.WriteLine("There is no monster " +
+                                "to attack");
+                        }
+                        else
+                        {
+                            player.Attack(currentRoom.Monster);
+                            if (currentRoom.Monster.Health <= 0)
+                            {
+                                Console.WriteLine($"You killed the " +
+                                    $"{currentRoom.Monster.Name}");
+                                currentRoom.Monster = null;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"the {currentRoom.Monster.Name} " +
+                                    $"has {currentRoom.Monster.Health} HP left");
+                                Console.WriteLine($"{currentRoom.Monster.Name} " +
+                                    $"attacked you");
+                                currentRoom.Monster.Attack(player);
+                                if (player.Health <= 0)
+                                {
+                                    Console.WriteLine("You died");
+                                    playing = false;
+                                    break;
+                                }
+                                player.CurrentStatus();
+                            }
+                        }
+                    }
+                    else if (Action.ToLower() == "heal")
+                    {
+                        player.Heal();
                     }
                     else if (Action.ToLower() == "go to next " +
                         "room")
@@ -131,10 +198,10 @@ namespace DungeonExplorer
                     }
                 }
                 roomNum += 1;
-                if (roomNum == 10)
+                if (roomNum == 5)
                 {
                     Console.WriteLine("you beat the game," +
-                        " you survived 10 rooms");
+                        " you survived 5 rooms");
                     player.CurrentStatus();
                     break;
                 }

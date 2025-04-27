@@ -6,8 +6,9 @@
     public class Room
     {
         private string _description;
-        private string _item1;
-        private string _item2;
+        private Item _item1;
+        private Item _item2;
+        private Creature _monster;
 
         ///<summary>
         ///This is a get and set method for the _description 
@@ -26,38 +27,46 @@
         ///<summary>
         ///This is a get and set method for the _item1 attribute
         ///</summary>
-        public string Item1
+        public Item Item1
         {
             get { return _item1; }
-            set
-            {
-                _item1 = string.IsNullOrEmpty(value) ? 
-                    "No Item" : value;
-            }
+            set { _item1 = value; }
         }
 
         ///<summary>
         ///This is a get and set method for the _item2 attribute
         ///</summary>
-        public string Item2
+        public Item Item2
         {
             get { return _item2; }
-            set
-            {
-                _item2 = string.IsNullOrEmpty(value) ? 
-                    "No Item" : value;
-            }
+            set { _item2 = value; }
+        }
+
+        public Creature Monster
+        {
+            get { return _monster; }
+            set { _monster = value; }
         }
 
         ///<summary>
         ///This is a constructor method for when there is items
         ///</summary>
-        public Room(string item1, string item2)
+        public Room(Item item1, Item item2, Creature monster)
         {
             Item1 = item1;
             Item2 = item2;
-            Description = $"This room contains a {Item1} " +
-                $"and a {Item2}";
+            Monster = monster;
+            if (monster != null)
+            {
+                Description = $"This room contains a {Item1.Name} " +
+                    $"a {Item2.Name} and a {Monster.Name} " +
+                    $"with {Monster.Health} HP ";
+            }
+            else
+            {
+                Description = $"This room contains a {Item1.Name} " +
+                $"and a {Item2.Name}";
+            }
         }
 
         ///<summary>
@@ -66,7 +75,9 @@
         ///</summary>
         public Room()
         {
-            Item1 = "";
+            Item1 = null;
+            Item2 = null;
+            Monster = null;
             Description = "";
         }
 

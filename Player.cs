@@ -7,67 +7,25 @@ namespace DungeonExplorer
     ///This class keeps track of the players name, health, and 
     ///inventory
     ///</summary>
-    public class Player
+    public class Player : Creature
     {
-        private string _name;
-        private int _health;
-        private List<string> inventory = new List<string>();
-
-        ///<summary>
-        ///This is a get and set method for the _name attribute
-        ///</summary>
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = string.IsNullOrEmpty(value) ? 
-                    "noName" : value;
-            }
-        }
-
-        ///<summary>
-        ///This is a get and set method for the _health 
-        ///attribute
-        ///</summary>
-        public int Health
-        {
-            get { return _health; }
-            set
-            {
-                if (value < 0)
-                {
-                    _health = 0;
-                }
-                else if (value > 100)
-                {
-                    _health = 100;
-                }
-                else
-                {
-                    _health = value;
-                }
-                /*_health = value;
-                Testing.TestHealth(_health);*/
-            }
-        }
+        private Inventory inventory = new Inventory();
 
         ///<summary>
         ///This is a constructor method
         ///</summary>
-        public Player(string name, int health)
+        public Player(string name, int health) : base(name, health)
         {
-            Name = name;
-            Health = health;
+            inventory.Add(new Weapon(10, "Fist"));
         }
 
         ///<summary>
         ///This method adds an item to the inventory if it is 
         ///empty and returns an error message if it is full
         ///</summary>
-        public void PickUpItem(string Item)
+        public void PickUpItem(Item Item)
         {
-            if (inventory.Count < 1)
+            if (inventory.Count() < 5)
             {
                 inventory.Add(Item);
             }
@@ -79,21 +37,36 @@ namespace DungeonExplorer
         }
 
         ///<summary>
-        ///this method outputs the contents of the inventory
-        ///</summary>
-        public string InventoryContents()
-        {
-            return string.Join(", ", inventory);
-        }
-
-        ///<summary>
         ///This method prints the health and inventory of 
         ///the player
         ///</summary>
         public void CurrentStatus()
         {
             Console.WriteLine($"{Health} HP, your inventory " +
-                $"contains: {InventoryContents()}");
+                $"contains: {inventory.InventoryContents()}");
+        }
+
+        public override void Attack(Creature monster)
+        {
+            inventory.GetWeapons();
+            while (true)
+            {
+                string weapon = Console.ReadLine();
+                for (int i = 0; i < inventory.Count(); i++)
+                {
+                    if (inventory._inventory[i].Name == weapon)
+                    {
+                        inventory._inventory[i].Use(monster);
+                        break;
+                    }
+                }
+                Console.Write("you dont have that weapon try again");
+            }
+        }
+
+        public void Heal()
+        {
+            inventory.GetPotions();
         }
     }
 }
