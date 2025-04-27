@@ -9,9 +9,9 @@ namespace DungeonExplorer
     internal class Potion : Item
     {
         public Potion(int healthAffect, string name) : base(healthAffect, name) { }
-        public override void Use(Creature player)
+        public void Use(int health)
         {
-            player.Health += HealthAffect;
+            health += HealthAffect;
         }
     }
 }

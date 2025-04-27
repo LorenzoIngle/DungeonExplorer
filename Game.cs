@@ -57,7 +57,7 @@ namespace DungeonExplorer
                 Console.WriteLine("-------------------" +
                         "---------------------------------" +
                         "---------------------");
-                currentRoom.GetDescription();
+                Console.WriteLine(currentRoom.GetDescription());
                 while (true)
                 {
                     Console.WriteLine("-------------------" +
@@ -181,14 +181,41 @@ namespace DungeonExplorer
                     }
                     else if (Action.ToLower() == "heal")
                     {
+                        if (player.Health == 100)
+                        {
+                            Console.WriteLine("You are already at full health");
+                            continue;
+                        }
                         player.Heal();
+                        if (currentRoom.Monster != null)
+                        {
+                            Console.WriteLine("The monster attacked you " +
+                                "while you were healing");
+                            currentRoom.Monster.Attack(player);
+                            player.CurrentStatus();
+                        }
+                        else
+                        {
+                            Console.WriteLine("You healed yourself");
+                            player.CurrentStatus();
+                        }
                     }
                     else if (Action.ToLower() == "go to next " +
                         "room")
                     {
-                        Console.WriteLine("Moving to next " +
-                            "room");
-                        break;
+                        if (currentRoom.Monster != null)
+                        {
+                            Console.WriteLine("You cannot leave " +
+                                "the room while there is a monster");
+                            currentRoom.Monster.Attack(player);
+                            player.CurrentStatus();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Moving to next " +
+                                "room");
+                            break;
+                        }
                     }
                     else
                     {

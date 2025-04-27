@@ -42,23 +42,31 @@ namespace DungeonExplorer
             {
                 if (item is Weapon)
                 {
-                    Console.WriteLine($"a {item.Name}");
+                    Console.WriteLine($"{item.Name}");
                 }
             }
-            Console.Write("Which weapon would you like to use?");
+            Console.Write("Which weapon would you like to use? ");
         }
 
-        public void GetPotions()
+        public int GetPotions()
         {
+            int NoOfPotions = 0;
             Console.WriteLine("You have the following potions:");
             foreach (Item item in _inventory)
             {
                 if (item is Potion)
                 {
-                    Console.WriteLine($"a {item.Name}");
+                    Console.WriteLine($"{item.Name}");
+                    NoOfPotions++;
                 }
             }
-            Console.Write("Which potion would you like to use?");
+            if (NoOfPotions == 0)
+            {
+                Console.WriteLine("You have no potions");
+                return NoOfPotions;
+            }
+            Console.Write("Which potion would you like to use? ");
+            return NoOfPotions;
         }
     }
 }
