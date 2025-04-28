@@ -192,6 +192,13 @@ namespace DungeonExplorer
                             Console.WriteLine("The monster attacked you " +
                                 "while you were healing");
                             currentRoom.Monster.Attack(player);
+                            if (player.Health <= 0)
+                            {
+                                Console.WriteLine("You died");
+                                playing = false;
+                                dead = true;
+                                break;
+                            }
                             player.CurrentStatus();
                         }
                         else
@@ -208,6 +215,13 @@ namespace DungeonExplorer
                             Console.WriteLine("You cannot leave " +
                                 "the room while there is a monster");
                             currentRoom.Monster.Attack(player);
+                            if (player.Health <= 0)
+                            {
+                                Console.WriteLine("You died");
+                                playing = false;
+                                dead = true;
+                                break;
+                            }
                             player.CurrentStatus();
                         }
                         else
@@ -225,10 +239,15 @@ namespace DungeonExplorer
                     }
                 }
                 roomNum += 1;
-                if (roomNum == 5)
+                if (dead == true)
+                {
+                    Console.WriteLine("Game over");
+                    break;
+                }
+                if (roomNum == 7)
                 {
                     Console.WriteLine("you beat the game," +
-                        " you survived 5 rooms");
+                        " you survived 7 rooms");
                     player.CurrentStatus();
                     break;
                 }
