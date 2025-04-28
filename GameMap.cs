@@ -11,14 +11,14 @@ namespace DungeonExplorer
         public Room[] rooms;
         public Random random;
         public Item[] itemList = { new Weapon(30, "Sword"), new Weapon(20, "Bow"), new Potion(20, "Small Health Potion"), new Potion(40, "Large Health Potion") };
-        public Creature[] monsterList = { null, new Monster ("Goblin", 20, 5), new Monster("Goblin", 20, 5), new Monster("Orc", 40, 10), new Monster("Troll", 80, 20) };
+        public Creature[] monsterList = { null, new Monster ("Lvl 1 Goblin", 20, 5), new Monster("Lvl 2 Goblin", 25, 5), new Monster("Lvl 1 Orc", 40, 10), new Monster("Lvl 2 Orc", 50, 10), new Monster("Troll", 80, 20), new Monste("Dragon", 120, 30) };
         public int itemNum;
         public int itemNum2;
         public int buffer = 0;
 
         public GameMap()
         {
-            rooms = new Room[5];
+            rooms = new Room[7];
             random = new Random();
             for (int i = 0; i < rooms.Length; i++)
             {
