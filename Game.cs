@@ -51,6 +51,7 @@ namespace DungeonExplorer
         public void Start()
         {
             bool playing = true;
+            bool dead = false;
             while (playing)
             {
                 currentRoom = map.rooms[roomNum];
@@ -173,6 +174,7 @@ namespace DungeonExplorer
                                 {
                                     Console.WriteLine("You died");
                                     playing = false;
+                                    dead = true;
                                     break;
                                 }
                                 player.CurrentStatus();
