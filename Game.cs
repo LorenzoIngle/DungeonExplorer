@@ -73,6 +73,8 @@ namespace DungeonExplorer
                         Console.WriteLine();
                         Console.WriteLine("Go to next room");
                         Console.WriteLine();
+                        Console.WriteLine("Go Back");
+                        Console.WriteLine();
                     }
                     else
                     {
@@ -83,6 +85,8 @@ namespace DungeonExplorer
                         Console.WriteLine("Attack monster");
                         Console.WriteLine();
                         Console.WriteLine("Heal");
+                        Console.WriteLine();
+                        Console.WriteLine("Go Back");
                         Console.WriteLine();
                     }
                     Console.Write("Which action would you like" +
@@ -208,12 +212,26 @@ namespace DungeonExplorer
                             currentRoom.Monster.Attack(player);
                             player.TakeDamage(currentRoom.Monster.Damage);
                             player.CurrentStatus();
+                            map.rooms[roomNum].UpdateDescription();
                         }
                         else
                         {
                             Console.WriteLine("Moving to next " +
                                 "room");
                             break;
+                        }
+                    }
+                    else if (Action.ToLower() == "go back")
+                    {
+                        if (roomNum >= 1)
+                        {
+                            map.rooms[roomNum].UpdateDescription();
+                            roomNum -= 2;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("You cant go back");
                         }
                     }
                     else

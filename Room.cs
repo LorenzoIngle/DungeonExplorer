@@ -62,6 +62,18 @@
                     $"a {Item2.Name} and a {Monster.Name} " +
                     $"with {Monster.Health} HP ";
             }
+            else if (item1 == null && item2 == null)
+            {
+                Description = "This room is empty";
+            }
+            else if (item1 == null)
+            {
+                Description = $"This room contains a {Item2.Name}";
+            }
+            else if (item2 == null)
+            {
+                Description = $"This room contains a {Item1.Name}";
+            }
             else
             {
                 Description = $"This room contains a {Item1.Name} " +
@@ -86,7 +98,35 @@
         ///</summary>
         public string GetDescription()
         {
+            UpdateDescription();
             return Description;
+        }
+
+        public void UpdateDescription()
+        {
+            if (Monster != null)
+            {
+                Description = $"This room contains a {Item1.Name} " +
+                    $"a {Item2.Name} and a {Monster.Name} " +
+                    $"with {Monster.Health} HP ";
+            }
+            else if (Item1 == null && Item2 == null)
+            {
+                Description = "This room is empty";
+            }
+            else if (Item1 == null)
+            {
+                Description = $"This room contains a {Item2.Name}";
+            }
+            else if (Item2 == null)
+            {
+                Description = $"This room contains a {Item1.Name}";
+            }
+            else
+            {
+                Description = $"This room contains a {Item1.Name} " +
+                $"and a {Item2.Name}";
+            }
         }
     }
 }
