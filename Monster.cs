@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace DungeonExplorer
 {
-    internal class Monster : Creature
+    public class Monster : Creature, IDamageable
     {
         private int damage;
+
+        public int Damage
+        {
+            get { return damage; }
+            set
+            {
+                damage = value;
+            }
+        }
 
         public Monster(string name, int health, int damage) : base(name, health)
         {
@@ -18,6 +27,11 @@ namespace DungeonExplorer
         public override void Attack(Creature player)
         {
             player.Health -= damage;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Console.WriteLine($"You have taken {damage} damage");
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DungeonExplorer
 {
-    public class Item
+    public class Item : ICollectible
     {
         private int _healthAffect;
         public string _name;
@@ -34,6 +34,11 @@ namespace DungeonExplorer
         public virtual void Use(Creature creature)
         {
             Console.WriteLine($"Using item: {_name}");
+        }
+
+        public void Collect()
+        {
+            Console.WriteLine($"You have collected: {_name}");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace DungeonExplorer
     ///This class keeps track of the players name, health, and 
     ///inventory
     ///</summary>
-    public class Player : Creature
+    public class Player : Creature, IDamageable
     {
         private Inventory inventory = new Inventory();
 
@@ -28,6 +28,7 @@ namespace DungeonExplorer
             if (inventory.Count() < 5)
             {
                 inventory.Add(Item);
+                Item.Collect();
             }
             else
             {
@@ -48,7 +49,9 @@ namespace DungeonExplorer
 
         public override void Attack(Creature monster)
         {
+            Console.WriteLine("You have the following weapons:");
             inventory.GetWeapons();
+            Console.Write("Which weapon would you like to use? ");
             bool UseWeapon = false;
             while (true)
             {
@@ -72,6 +75,7 @@ namespace DungeonExplorer
 
         public void Heal()
         {
+            Console.WriteLine("You have the following potions:");
             int NoOfPotions = inventory.GetPotions();
             if (NoOfPotions == 0)
             {
@@ -104,6 +108,11 @@ namespace DungeonExplorer
                 }
                 Console.Write("you dont have that potion try again ");
             }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Console.WriteLine($"You have taken {damage} damage");
         }
     }
 }

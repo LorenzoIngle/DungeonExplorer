@@ -8,7 +8,7 @@
         private string _description;
         private Item _item1;
         private Item _item2;
-        private Creature _monster;
+        private Monster _monster;
 
         ///<summary>
         ///This is a get and set method for the _description 
@@ -42,7 +42,7 @@
             set { _item2 = value; }
         }
 
-        public Creature Monster
+        public Monster Monster
         {
             get { return _monster; }
             set { _monster = value; }
@@ -51,7 +51,7 @@
         ///<summary>
         ///This is a constructor method for when there is items
         ///</summary>
-        public Room(Item item1, Item item2, Creature monster)
+        public Room(Item item1, Item item2, Monster monster)
         {
             Item1 = item1;
             Item2 = item2;

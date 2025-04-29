@@ -15,9 +15,7 @@ namespace DungeonExplorer
     {
         static void Main(string[] args)
         {
-            string[] items = { "Health potion", "Sword", "Bow", 
-                "Bone" };
-            Game game = new Game(items);
+            Game game = new Game();
             game.Start();
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();

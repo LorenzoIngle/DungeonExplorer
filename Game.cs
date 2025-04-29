@@ -14,7 +14,6 @@ namespace DungeonExplorer
         private GameMap map;
         private Room currentRoom;
         private Random random;
-        private string[] itemList;
         private string action;
         private int roomNum;
 
@@ -33,13 +32,12 @@ namespace DungeonExplorer
         ///<summary>
         ///This is a constructor method
         ///</summary>
-        public Game(string[] Items)
+        public Game()
         {
             Console.Write("Enter your name: ");
             player = new Player(Console.ReadLine(), 100);
             map = new GameMap();
             random = new Random();
-            itemList = Items;
             roomNum = 0;
         }
 
@@ -51,6 +49,7 @@ namespace DungeonExplorer
         public void Start()
         {
             bool playing = true;
+            bool dead = false;
             while (playing)
             {
                 currentRoom = map.rooms[roomNum];
@@ -155,7 +154,10 @@ namespace DungeonExplorer
                         }
                         else
                         {
+                            int monsterOriginalHealth = currentRoom.Monster.Health;
                             player.Attack(currentRoom.Monster);
+                            int damageDealt = monsterOriginalHealth - currentRoom.Monster.Health;
+                            currentRoom.Monster.TakeDamage(damageDealt);
                             if (currentRoom.Monster.Health <= 0)
                             {
                                 Console.WriteLine($"You killed the " +
@@ -169,12 +171,7 @@ namespace DungeonExplorer
                                 Console.WriteLine($"{currentRoom.Monster.Name} " +
                                     $"attacked you");
                                 currentRoom.Monster.Attack(player);
-                                if (player.Health <= 0)
-                                {
-                                    Console.WriteLine("You died");
-                                    playing = false;
-                                    break;
-                                }
+                                player.TakeDamage(currentRoom.Monster.Damage);
                                 player.CurrentStatus();
                             }
                         }
@@ -192,6 +189,7 @@ namespace DungeonExplorer
                             Console.WriteLine("The monster attacked you " +
                                 "while you were healing");
                             currentRoom.Monster.Attack(player);
+                            player.TakeDamage(currentRoom.Monster.Damage);
                             player.CurrentStatus();
                         }
                         else
@@ -208,6 +206,7 @@ namespace DungeonExplorer
                             Console.WriteLine("You cannot leave " +
                                 "the room while there is a monster");
                             currentRoom.Monster.Attack(player);
+                            player.TakeDamage(currentRoom.Monster.Damage);
                             player.CurrentStatus();
                         }
                         else
@@ -223,12 +222,24 @@ namespace DungeonExplorer
                             $"not a valid action please try " +
                             $"again");
                     }
+                    if (player.Health <= 0)
+                    {
+                        Console.WriteLine("You died");
+                        playing = false;
+                        dead = true;
+                        break;
+                    }
                 }
                 roomNum += 1;
-                if (roomNum == 5)
+                if (dead == true)
+                {
+                    Console.WriteLine($"Game over you survived {roomNum - 1} rooms");
+                    break;
+                }
+                if (roomNum == 7)
                 {
                     Console.WriteLine("you beat the game," +
-                        " you survived 5 rooms");
+                        " you survived 7 rooms");
                     player.CurrentStatus();
                     break;
                 }

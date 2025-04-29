@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,36 +38,36 @@ namespace DungeonExplorer
 
         public void GetWeapons()
         {
-            Console.WriteLine("You have the following weapons:");
-            foreach (Item item in _inventory)
+            List<Item> weapons =
+            (from item in _inventory
+            where item is Weapon
+            select item).ToList();
+            foreach (Item item in weapons)
             {
-                if (item is Weapon)
-                {
-                    Console.WriteLine($"{item.Name}");
-                }
+                Console.WriteLine($"{item.Name}");
             }
-            Console.Write("Which weapon would you like to use? ");
         }
 
         public int GetPotions()
         {
-            int NoOfPotions = 0;
-            Console.WriteLine("You have the following potions:");
-            foreach (Item item in _inventory)
-            {
-                if (item is Potion)
-                {
-                    Console.WriteLine($"{item.Name}");
-                    NoOfPotions++;
-                }
-            }
-            if (NoOfPotions == 0)
+            List<Item> potions =
+                (from item in _inventory
+                 where item is Potion
+                 select item).ToList();
+            if (potions.Count() == 0)
             {
                 Console.WriteLine("You have no potions");
-                return NoOfPotions;
+                return potions.Count();
             }
-            Console.Write("Which potion would you like to use? ");
-            return NoOfPotions;
+            else
+            {
+                foreach (Item item in potions)
+                {
+                    Console.WriteLine($"{item.Name}");
+                }
+                Console.Write("Which potion would you like to use? ");
+            }
+            return potions.Count();
         }
     }
 }
