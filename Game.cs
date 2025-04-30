@@ -14,6 +14,7 @@ namespace DungeonExplorer
         private GameMap map;
         private Room currentRoom;
         private Random random;
+        private Statistics stats;
         private string action;
         private int roomNum;
 
@@ -38,6 +39,7 @@ namespace DungeonExplorer
             player = new Player(Console.ReadLine(), 100);
             map = new GameMap();
             random = new Random();
+            stats = new Statistics();
             roomNum = 0;
         }
 
@@ -75,6 +77,8 @@ namespace DungeonExplorer
                         Console.WriteLine();
                         Console.WriteLine("Go Back");
                         Console.WriteLine();
+                        Console.WriteLine("Check stats");
+                        Console.WriteLine();
                     }
                     else
                     {
@@ -88,6 +92,8 @@ namespace DungeonExplorer
                         Console.WriteLine();
                         Console.WriteLine("Go Back");
                         Console.WriteLine();
+                        Console.WriteLine("Check stats");
+                        Console.WriteLine();
                     }
                     Console.Write("Which action would you like" +
                         " to perform: ");
@@ -97,6 +103,7 @@ namespace DungeonExplorer
                         "status")
                     {
                         player.CurrentStatus();
+                        stats.AddAction();
                     }
                     else if (Action.ToLower() == "pick up item")
                     {
@@ -148,6 +155,7 @@ namespace DungeonExplorer
                                     "item in the room.");
                             }
                         }
+                        stats.AddAction();
                     }
                     else if (Action.ToLower() == "attack monster")
                     {
@@ -162,6 +170,7 @@ namespace DungeonExplorer
                             player.Attack(currentRoom.Monster);
                             int damageDealt = monsterOriginalHealth - currentRoom.Monster.Health;
                             currentRoom.Monster.TakeDamage(damageDealt);
+                            stats.AddDamage(damageDealt);
                             if (currentRoom.Monster.Health <= 0)
                             {
                                 Console.WriteLine($"You killed the " +
@@ -179,12 +188,14 @@ namespace DungeonExplorer
                                 player.CurrentStatus();
                             }
                         }
+                        stats.AddAction();
                     }
                     else if (Action.ToLower() == "heal")
                     {
                         if (player.Health == 100)
                         {
                             Console.WriteLine("You are already at full health");
+                            stats.AddAction();
                             continue;
                         }
                         player.Heal();
@@ -201,6 +212,7 @@ namespace DungeonExplorer
                             Console.WriteLine("You healed yourself");
                             player.CurrentStatus();
                         }
+                        stats.AddAction();
                     }
                     else if (Action.ToLower() == "go to next " +
                         "room")
@@ -218,8 +230,10 @@ namespace DungeonExplorer
                         {
                             Console.WriteLine("Moving to next " +
                                 "room");
+                            stats.AddAction();
                             break;
                         }
+                        stats.AddAction();
                     }
                     else if (Action.ToLower() == "go back")
                     {
@@ -227,12 +241,18 @@ namespace DungeonExplorer
                         {
                             map.rooms[roomNum].UpdateDescription();
                             roomNum -= 2;
+                            stats.AddAction();
                             break;
                         }
                         else
                         {
                             Console.WriteLine("You cant go back");
                         }
+                        stats.AddAction();
+                    }
+                    else if (Action.ToLower() == "check stats")
+                    {
+                        stats.CheckStats();
                     }
                     else
                     {
