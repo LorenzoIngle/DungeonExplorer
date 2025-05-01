@@ -31,7 +31,7 @@ namespace DungeonExplorer
 
         public void TakeDamage(int damage)
         {
-            Console.WriteLine($"You have taken {damage} damage");
+            Console.WriteLine($"{Name} has taken {damage} damage");
         }
     }
 }
